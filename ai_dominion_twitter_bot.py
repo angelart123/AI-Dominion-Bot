@@ -3,18 +3,24 @@ import os
 import random
 from dotenv import load_dotenv
 
-# Load environment variables
+# Load API keys from .env file
 load_dotenv()
 
-# API Keys from GitHub Secrets (Set in GitHub Repository Settings)
 API_KEY = os.getenv("API_KEY")
 API_SECRET = os.getenv("API_SECRET")
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 ACCESS_SECRET = os.getenv("ACCESS_SECRET")
 BEARER_TOKEN = os.getenv("BEARER_TOKEN")
 
-# Authenticate using OAuth1 for free-tier posting
-auth = tweepy.OAuth1UserHandler(API_KEY, API
+# ✅ Use API v2 (Free Tier Compatible)
+client = tweepy.Client(
+    bearer_token=BEARER_TOKEN,
+    consumer_key=API_KEY,
+    consumer_secret=API_SECRET,
+    access_token=ACCESS_TOKEN,
+    access_token_secret=ACCESS_SECRET,
+    wait_on_rate_limit=True
+)
 
 # List of possible tweets
 tweets = [
@@ -29,10 +35,8 @@ tweets = [
 def post_tweet():
     """Posts a random tweet from the list"""
     tweet = random.choice(tweets)
-    client.update_status(status=tweet)
+    client.create_tweet(text=tweet)  # ✅ Fix: API v2 method for free-tier posting
     print(f"Tweeted: {tweet}")
 
-# Run the bot once to test
 if __name__ == "__main__":
     post_tweet()
-
