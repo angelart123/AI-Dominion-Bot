@@ -3,17 +3,18 @@ import os
 import random
 from dotenv import load_dotenv
 
-# Load API keys from .env file
+# Load environment variables
 load_dotenv()
 
+# API Keys from GitHub Secrets (Set in GitHub Repository Settings)
 API_KEY = os.getenv("API_KEY")
 API_SECRET = os.getenv("API_SECRET")
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 ACCESS_SECRET = os.getenv("ACCESS_SECRET")
+BEARER_TOKEN = os.getenv("BEARER_TOKEN")
 
-# Authenticate with Twitter API (v1.1 for Free Tier)
-auth = tweepy.OAuth1UserHandler(API_KEY, API_SECRET, ACCESS_TOKEN, ACCESS_SECRET)
-client = tweepy.API(auth, wait_on_rate_limit=True)
+# Authenticate using OAuth1 for free-tier posting
+auth = tweepy.OAuth1UserHandler(API_KEY, API
 
 # List of possible tweets
 tweets = [
